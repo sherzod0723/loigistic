@@ -8,7 +8,6 @@ from django.template.loader import render_to_string
 from PIL import Image
 from parler.models import TranslatableModel, TranslatedFields
 
-
 # Create your models here.
 
 class Partner(models.Model):
@@ -67,20 +66,17 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
-
 # Signal receiver function
 @receiver(post_save, sender=Order)
 def post_order_on_telegram(sender, instance, created, **kwargs):
     if created:
-        asyncio.run(post_event_on_telegram(instance.from_where, instance.phone, instance.email, instance.to_where,
-                                           instance.weight, instance.when, instance.truck_type))
+        asyncio.run(post_event_on_telegram(instance.from_where,instance.phone,instance.email,instance.to_where,  instance.weight, instance.when, instance.truck_type))
 
-
-async def post_event_on_telegram(from_where, phone, to_where, email, weight, when, truck_type):
+async def post_event_on_telegram(from_where,phone, to_where, email, weight, when, truck_type):
     event = {
         'from_where': from_where,
         'phone': phone,
-        'email': email,
+        'email' : email ,
         'to_where': to_where,
         'weight': weight,
         'when': when,
@@ -93,9 +89,10 @@ async def post_event_on_telegram(from_where, phone, to_where, email, weight, whe
     print('event sent')
 
 
+
 class Blog(TranslatableModel):
     translations = TranslatedFields(
-        title=models.CharField(max_length=300, verbose_name='Заголовок'),
+        title = models.CharField(max_length=300, verbose_name='Заголовок'),
     )
     image = models.ImageField(upload_to='blogs', verbose_name='Изображение')
 
@@ -104,8 +101,9 @@ class Blog(TranslatableModel):
     #     new_size = (857, 539)
     #     img.thumbnail(new_size)
     #     img.save(self.image.path)
-
+        
     #     super().save(*args, **kwargs)
+    #aaskdugvasl
 
     def __str__(self):
         return self.title
@@ -113,3 +111,7 @@ class Blog(TranslatableModel):
     class Meta:
         verbose_name = 'Блог'
         verbose_name_plural = 'Блоги'
+
+
+
+
